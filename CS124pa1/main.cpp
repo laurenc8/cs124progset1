@@ -26,7 +26,7 @@ vector<vector<float> > firstGraphGenerator(int n)
             }
             else
             {
-                graph[j][i] = graph[i][j];
+                graph[i][j] = graph[j][i];
             }
         }
     }
@@ -48,18 +48,20 @@ vector<vector<float> > thirdGraphGenerator(int n)
 
 void prim(const vector<vector<float> >& graph, int n)
 {
-    vector<float> dist = vector<float> (n, 0);
-    vector<float> prev = vector<float> (n, NULL);
-    vector<float> s = vector<float> (n, NULL);
-    vector<float> h = vector<float> (n, NULL);
+    vector<float> dist = vector<float> (n, (float)n*(n-1)/2);
+    vector<float> prev = vector<float> (n, (float)n+1);
+    vector<float> s = vector<float> (n, (float)0);
+    vector<float> h = vector<float> (n, (float)-1);
     h[0] = 0;
     for(int i = 0; i < n; ++i)
     {
-        dist[i] = 2;
+        dist[i] = (2);
     }
     dist[0] = 0;
-    while(!h.empty())
+    bool empty = false;
+    while(!empty)
     {
+        cout << "hi" << endl;
         int min = 2;
         int v = 0;
         for(int i = 0; i < n; ++i)
@@ -70,12 +72,12 @@ void prim(const vector<vector<float> >& graph, int n)
                 v = i;
             }
         }
-        h[min] = NULL;
+        h[v] = (float)-1;
         for(int j = 0; j < n; ++j)
         {
-            if(s[j] != NULL)
+            if(s[j] != 0)
             {
-                s[j] = v;
+                s[j] = (float)v;
             }
         }
         for(int w = 0; w < n; ++w)
@@ -88,6 +90,14 @@ void prim(const vector<vector<float> >& graph, int n)
                     prev[w] = v;
                     h[w] = dist[w];
                 }
+            }
+        }
+        empty = true;
+        for(int k = 0; k < n; ++k)
+        {
+            if (h[k] != -1)
+            {
+                empty = false;
             }
         }
     }
@@ -112,7 +122,6 @@ int main()
             cout << graph[i][j] << " ";
         }
     }
-
 
     //perform mst algorithm
     prim(graph, n);
