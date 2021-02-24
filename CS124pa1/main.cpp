@@ -46,7 +46,7 @@ using namespace std;
 int extractmin(float dist[], int size, bool s[])
 {
     int index = -1;
-    int mindist = 2;
+    float mindist = 2;
     for(int i = 0; i < size; i++)
     {
         if(dist[i] < mindist && s[i] == false)
@@ -74,7 +74,6 @@ float prim(int n)
     {
         int v = extractmin(dist, n, s);
         size += dist[v];
-        cout << dist[v] << endl;
         s[v] = true;
         for(int w = 0; w < n; ++w)
         {
