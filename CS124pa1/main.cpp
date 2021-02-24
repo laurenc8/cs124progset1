@@ -1,98 +1,127 @@
 #include <iostream>
 #include <time.h>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 //using adjmatrix = vector<vector<float> >; //use this?
 //notes from zach: return graph(vector<float>(0, n)) to generate an empty graph
 
-vector<vector<float> > firstGraphGenerator(int n)
+// float** firstGraphGenerator(int n)
+// {
+//     //generates the first type of graph
+//     srand((unsigned)time(NULL));
+    
+//     for(int i = 0; i < n; ++i)
+//     {
+//         for(int j = 0; j < n; ++j)
+//         {
+//             if(i < j)
+//             {
+//                 graph[i][j] = (float) rand()/RAND_MAX;
+//             }
+//             else if (i == j)
+//             {
+//                 graph[i][j] = 2;
+//             }
+//             else
+//             {
+//                 graph[i][j] = graph[j][i];
+//             }
+//         }
+//     }
+//     return graph;
+// }
+
+
+// vector<vector<float> > secondGraphGenerator(int n)
+// {
+    //generates the second type of graph
+// }
+
+
+// vector<vector<float> > thirdGraphGenerator(int n)
+// {
+    //generates the third type of graph
+// }
+
+int extractmin(float dist[], int size, bool s[])
 {
-    //generates the first type of graph
-    srand((unsigned)time(NULL));
-    vector<vector<float> > graph = vector<vector<float> >(n, vector<float>(n, 0));
-    for(int i = 0; i < n; ++i)
+    int index = -1;
+    float mindist = 2;
+    for(int i = 0; i < size; i++)
     {
-        for(int j = 0; j < n; ++j)
+        if(dist[i] < mindist && s[i] == false)
         {
-            if(i < j)
-            {
-                graph[i][j] = (double) rand()/RAND_MAX;
-            }
-            else if (i == j)
-            {
-                graph[i][j] = 2;
-            }
-            else
-            {
-                graph[j][i] = graph[i][j];
-            }
+            index = i;
+            mindist = dist[i];
         }
     }
-    return graph;
+    return index;
 }
 
-
-vector<vector<float> > secondGraphGenerator(int n)
+float prim(int n)
 {
-    //generates the second type of graph
-}
-
-
-vector<vector<float> > thirdGraphGenerator(int n)
-{
-    //generates the third type of graph
-}
-
-
-void prim(const vector<vector<float> >& graph, int n)
-{
-    vector<float> dist = vector<float> (n, 0);
-    vector<float> prev = vector<float> (n, NULL);
-    vector<float> s = vector<float> (n, NULL);
-    vector<float> h = vector<float> (n, NULL);
-    h[0] = 0;
+    srand((unsigned)time(NULL));
+    float size = 0;
+    float dist[n];
+    bool s[n];
     for(int i = 0; i < n; ++i)
     {
         dist[i] = 2;
+        s[i] = false;
     }
     dist[0] = 0;
-    while(!h.empty())
+    for(int j = 0; j < n; ++j)
     {
-        int min = 2;
-        int v = 0;
-        for(int i = 0; i < n; ++i)
-        {
-            if(h[i] < min)
-            {
-                min = h[i];
-                v = i;
-            }
-        }
-        h[min] = NULL;
-        for(int j = 0; j < n; ++j)
-        {
-            if(s[j] != NULL)
-            {
-                s[j] = v;
-            }
-        }
+        int v = extractmin(dist, n, s);
+        size += dist[v];
+        s[v] = true;
         for(int w = 0; w < n; ++w)
         {
-            if(count(s.begin(), s.end(), (float)w) == 0)
+            float edgeWeight = (float)rand()/RAND_MAX;
+            if((v != w) && (s[w] == false) && (dist[w] > edgeWeight))
             {
-                if(dist[w] > graph[v][w])
-                {
-                    dist[w] = graph[v][w];
-                    prev[w] = v;
-                    h[w] = dist[w];
-                }
+                dist[w] = edgeWeight;
             }
         }
     }
+    // float size = 0;
+    // for(int k = 1; k < n; ++k)
+    // {
+    //     size += dist[k];
+    // }
+    return size;
 }
 
+// float prim(float **graph, int n)
+// {
+//     float dist[n];
+//     bool s[n];
+//     for(int i = 0; i < n; ++i)
+//     {
+//         dist[i] = 2;
+//         s[i] = false;
+//     }
+//     dist[0] = 0;
+//     for(int j = 0; j < n; ++j)
+//     {
+//         int v = extractmin(dist, n);
+//         s[v] = true;
+//         for(int w = 0; w < n; ++w)
+//         {
+//             if(s[w] == false && dist[w] > graph[v][w])
+//             {
+//                 dist[w] = graph[v][w];
+//                 s[w] = true;
+//             }
+//         }
+//     }
+//     float size = 0;
+//     for(int k = 0; k < n; ++k)
+//     {
+//         size += dist[k];
+//     }
+//     return size;
+// }
 
 int main()
 {
@@ -101,20 +130,10 @@ int main()
     cout << "Give a value of n: " << endl;
     cin >> n;
 
-    auto graph = firstGraphGenerator(n);
     //graph = secondGraphGenerator();
     //graph = thirdGraphGenerator();
 
-    for(int i = 0; i < n; ++i)
-    {
-        for(int j = 0; j < n; ++j)
-        {
-            cout << graph[i][j] << " ";
-        }
-    }
-
-
     //perform mst algorithm
-    prim(graph, n);
+    cout << prim(n) << endl;
     return 0;
 }
