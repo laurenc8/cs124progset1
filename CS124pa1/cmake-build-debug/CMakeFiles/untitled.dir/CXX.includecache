@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/helenajiang/Documents/cs124progset1/CS124pa1/main.cpp
+iostream
+-
+time.h
+-
+vector
+-
+algorithm
+-
+

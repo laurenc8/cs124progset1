@@ -92,6 +92,40 @@ float prim(int n)
     return size;
 }
 
+
+float prim2d(int n)
+{
+    srand((unsigned)time(NULL));
+    float size = 0;
+    float dist[n];
+    bool s[n];
+    for(int i = 0; i < n; ++i)
+    {
+        dist[i] = 2;
+        s[i] = false;
+    }
+    dist[0] = 0;
+    for(int j = 0; j < n; ++j)
+    {
+        int v = extractmin(dist, n, s);
+        size += dist[v];
+        s[v] = true;
+        float x1 = (float)rand()/RAND_MAX;
+        float y1 = (float)rand()/RAND_MAX;
+        for(int w = 0; w < n; ++w)
+        {
+            float x2 = (float)rand()/RAND_MAX;
+            float y2 = (float)rand()/RAND_MAX;
+            float edgeWeight = (float) sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
+            if((v != w) && (s[w] == false) && (dist[w] > edgeWeight))
+            {
+                dist[w] = edgeWeight;
+            }
+        }
+    }
+    return size;
+}
+
 // float prim(float **graph, int n)
 // {
 //     float dist[n];
@@ -135,5 +169,6 @@ int main()
 
     //perform mst algorithm
     cout << prim(n) << endl;
+    cout << prim2d(n) << endl;
     return 0;
 }
