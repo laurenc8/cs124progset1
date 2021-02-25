@@ -84,18 +84,18 @@ float prim(int n)
             }
         }
     }
-    // float size = 0;
-    // for(int k = 1; k < n; ++k)
-    // {
-    //     size += dist[k];
-    // }
     return size;
 }
 
-
 float prim2d(int n)
-{
+{    
     srand((unsigned)time(NULL));
+    float graph[n][2];
+    for(int k = 0; k < n; ++k)
+    {
+        graph[k][0] = (float)rand()/RAND_MAX;
+        graph[k][1] = (float)rand()/RAND_MAX;
+    }
     float size = 0;
     float dist[n];
     bool s[n];
@@ -110,13 +110,9 @@ float prim2d(int n)
         int v = extractmin(dist, n, s);
         size += dist[v];
         s[v] = true;
-        float x1 = (float)rand()/RAND_MAX;
-        float y1 = (float)rand()/RAND_MAX;
         for(int w = 0; w < n; ++w)
         {
-            float x2 = (float)rand()/RAND_MAX;
-            float y2 = (float)rand()/RAND_MAX;
-            float edgeWeight = (float) sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) * 1.0);
+            float edgeWeight = (float) sqrt((float)pow(graph[w][0] - graph[v][0], 2) + (float)pow(graph[w][1] - graph[v][1], 2));
             if((v != w) && (s[w] == false) && (dist[w] > edgeWeight))
             {
                 dist[w] = edgeWeight;
