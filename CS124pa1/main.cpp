@@ -193,7 +193,6 @@ int main(int argc, char *argv[])
         {
             cout << "Dimension must be 0, 2, 3, or 4." << endl;
         }
-
     }
     return 0;
 }
