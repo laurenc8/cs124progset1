@@ -106,7 +106,7 @@ float prim3d(int n)
         for(int w = 0; w < n; ++w)
         {
             float edgeWeight = (float) sqrt((float)pow(graph[w][0] - graph[v][0], 2) +
-                    (float)pow(graph[w][1] - graph[v][1], 2) + (float)pow(graph[w][2] - graph[v][2], 2));
+                                            (float)pow(graph[w][1] - graph[v][1], 2) + (float)pow(graph[w][2] - graph[v][2], 2));
             if((v != w) && (s[w] == false) && (dist[w] > edgeWeight))
             {
                 dist[w] = edgeWeight;
@@ -143,8 +143,8 @@ float prim4d(int n)
         for(int w = 0; w < n; ++w)
         {
             float edgeWeight = (float) sqrt((float)pow(graph[w][0] - graph[v][0], 2)
-                    + (float)pow(graph[w][1] - graph[v][1], 2) + (float)pow(graph[w][2] - graph[v][2], 2)
-                                                                 + (float)pow(graph[w][3] - graph[v][3], 2));
+                                            + (float)pow(graph[w][1] - graph[v][1], 2) + (float)pow(graph[w][2] - graph[v][2], 2)
+                                            + (float)pow(graph[w][3] - graph[v][3], 2));
             if((v != w) && (s[w] == false) && (dist[w] > edgeWeight))
             {
                 dist[w] = edgeWeight;
@@ -193,7 +193,6 @@ int main(int argc, char *argv[])
         {
             cout << "Dimension must be 0, 2, 3, or 4." << endl;
         }
-        
     }
     return 0;
 }
