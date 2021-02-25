@@ -20,7 +20,6 @@ int extractmin(float dist[], int size, bool s[])
 
 float prim(int n)
 {
-    srand((unsigned)time(NULL));
     float size = 0;
     float dist[n];
     bool s[n];
@@ -48,8 +47,7 @@ float prim(int n)
 }
 
 float prim2d(int n)
-{    
-    srand((unsigned)time(NULL));
+{
     float graph[n][2];
     for(int k = 0; k < n; ++k)
     {
@@ -84,7 +82,6 @@ float prim2d(int n)
 
 float prim3d(int n)
 {
-    srand((unsigned)time(NULL));
     float graph[n][3];
     for(int k = 0; k < n; ++k)
     {
@@ -121,7 +118,6 @@ float prim3d(int n)
 
 float prim4d(int n)
 {
-    srand((unsigned)time(NULL));
     float graph[n][4];
     for(int k = 0; k < n; ++k)
     {
@@ -159,21 +155,46 @@ float prim4d(int n)
 }
 
 
-int main()
+int main(int argc, char *argv[])
 {
-    //generate graph
-    int n;
-    cout << "Give a value of n: " << endl;
-    cin >> n;
-
-    //graph = secondGraphGenerator();
-    //graph = thirdGraphGenerator();
-
-    //perform mst algorithm
-    //cout << prim(n) << endl;
-    //cout << prim2d(n) << endl;
-    cout << prim3d(n) << endl;
-    cout << prim4d(n) << endl;
+    int numpoints;
+    int numtrials;
+    int dimension;
+    if(argc == 5)
+    {
+        numpoints = atoi(argv[2]);
+        numtrials = atoi(argv[3]);
+        dimension = atoi(argv[4]);
+    }
+    else
+    {
+        cout << "Incorrect Number of Command Line Arguments" << endl;
+    }
+    srand((unsigned)time(NULL));
+    for(int i = 0; i < numtrials; ++i)
+    {
+        if(dimension == 0)
+        {
+            cout << prim(numpoints) << endl;
+        }
+        else if(dimension == 2)
+        {
+            cout << prim2d(numpoints) << endl;
+        }
+        else if(dimension == 3)
+        {
+            cout << prim3d(numpoints) << endl;
+        }
+        else if(dimension == 4)
+        {
+            cout << prim4d(numpoints) << endl;
+        }
+        else
+        {
+            cout << "Dimension must be 0, 2, 3, or 4." << endl;
+        }
+        
+    }
     return 0;
 }
 
